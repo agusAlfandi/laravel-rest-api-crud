@@ -4,26 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use App\Http\Requests\createTodo;
+use App\Http\Resources\TodoResource;
 
 class TodoController extends Controller
 {
     public function index()
     {
-        $todos = Todo::all();
-        return response()->json([
-            'message' => 'Get todo successfully',
-            'data' => $todos
-        ], 200);
+        return TodoResource::collection(Todo::all());
     }
 
     public function detail($id)
     {
-        $todo = Todo::findOrFail($id);
-
-        return response()->json([
-            'message' => 'Success get data todo by id',
-            'data' => $todo
-        ]);
+        return new TodoResource(Todo::findOrFail($id));
     }
 
     public function store(createTodo $request)
@@ -34,7 +26,7 @@ class TodoController extends Controller
 
         return response()->json([
             'message' => 'Todo created successfully',
-            'data' => $todo
+            'data' => new TodoResource($todo)
         ], 201);
     }
 
@@ -46,7 +38,7 @@ class TodoController extends Controller
 
         return response()->json([
             'message' => 'Update todo successfully',
-            'data' => $Todo
+            'data' => new TodoResource($Todo)
         ], 200);
     }
 
@@ -57,7 +49,6 @@ class TodoController extends Controller
 
         return response()->json([
             'message' => 'Delete todo successfully',
-            'data' => $todo
         ], 200);
     }
 }
