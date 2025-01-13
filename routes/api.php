@@ -17,6 +17,3 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
-
-// 4|6EcSXiixEnOStBV0FqowLi9neJkMhNvRVEGU5wsV9fd1e5d2 => mobile
-// "5|d5wAnUxXpFXBRUgQevpnu1puHZCDhQ0YXSIsncym6eb7020a" => web
